@@ -98,7 +98,7 @@ public class Operation {
             return determinantOf2X2(matrix);
         }
 
-        return expandByColumns(matrix);
+        return laplaceExpand(matrix);
     }
 
 
@@ -108,7 +108,7 @@ public class Operation {
     }
 
 
-    private static double expandByColumns(double[][] matrix) {
+    private static double laplaceExpand(double[][] matrix) {
         int rows = matrix.length;
         int cols = matrix[0].length;
         double det = 0;
@@ -119,7 +119,7 @@ public class Operation {
                     + (matrix[0][2] * (matrix[1][0] * matrix[2][1] - matrix[2][0] * matrix[1][1]));
         } else {
             for (int i = 0; i < rows; i++) {
-                det += Math.pow(-1, i) * matrix[0][i] * expandByColumns(minor(matrix, i));
+                det += Math.pow(-1, i) * matrix[0][i] * laplaceExpand(minor(matrix, i));
             }
         }
         return det;
