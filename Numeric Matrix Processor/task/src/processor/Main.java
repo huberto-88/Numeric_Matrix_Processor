@@ -95,20 +95,7 @@ public class Main {
 
                     System.out.println("The result is:");
                     System.out.println(Operation.calculateDeterminant(matrixA));
-                    System.out.println("The result is:");
-                    displayMatrix(Operation.inverseMatrix(matrixA));
                 }
-                break;
-                case "6": {
-                    System.out.println("6. Inverse matrix");
-                    rows = scanner.nextInt();
-                    cols = scanner.nextInt();
-                    System.out.println("Enter first matrix: ");
-                    matrixA = readInputMatrix(rows, cols);
-
-
-                }
-                break;
                 case "0": {
                     System.exit(0);
                 }

@@ -8,7 +8,7 @@ public class Operation {
         } else {
             double[][] sumMatrix = new double[matrixA.length][matrixA[0].length];
 
-            for (int i = 0; i < matrixA.length ; i++) {
+            for (int i = 0; i < matrixA.length; i++) {
                 for (int j = 0; j < matrixA[0].length; j++) {
                     sumMatrix[i][j] = matrixA[i][j] + matrixB[i][j];
                 }
@@ -18,7 +18,7 @@ public class Operation {
     }
 
     public static void multiplyByScalar(double[][] matrix, double constant) {
-        for (int i = 0; i < matrix.length ; i++) {
+        for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
                 matrix[i][j] *= constant;
             }
@@ -91,35 +91,23 @@ public class Operation {
         //MATRIX 1 element
         if (rows == 1 && cols == 1) {
             return matrix[0][0];
+        } else {
+            return laplaceExpansion(matrix);
         }
-
-        //MATRIX 2X2
-        if (rows == 2 && cols == 2) {
-            return determinantOf2X2(matrix);
-        }
-
-        return laplaceExpand(matrix);
     }
 
 
-    private static double determinantOf2X2(double[][] matrix) {
-        return matrix[0][0] * matrix[1][1]
-                - matrix[1][0] * matrix[0][1];
-    }
-
-
-    private static double laplaceExpand(double[][] matrix) {
+    private static double laplaceExpansion(double[][] matrix) {
         int rows = matrix.length;
         int cols = matrix[0].length;
         double det = 0;
 
-        if (rows == 3 && cols == 3) {
-            return (matrix[0][0] * (matrix[1][1] * matrix[2][2] - matrix[2][1] * matrix[1][2])
-                    + ( -1 * matrix[0][1]) * (matrix[1][0] * matrix[2][2] - matrix[2][0] * matrix[1][2]))
-                    + (matrix[0][2] * (matrix[1][0] * matrix[2][1] - matrix[2][0] * matrix[1][1]));
+        if (rows == 2 && cols == 2) {
+            return matrix[0][0] * matrix[1][1]
+                    - matrix[1][0] * matrix[0][1];
         } else {
             for (int i = 0; i < rows; i++) {
-                det += Math.pow(-1, i) * matrix[0][i] * laplaceExpand(minor(matrix, i));
+                det += Math.pow(-1, i) * matrix[0][i] * laplaceExpansion(minor(matrix, i));
             }
         }
         return det;
@@ -131,20 +119,15 @@ public class Operation {
 
         double[][] expandMatrix = new double[rows - 1][cols - 1];
         int ii = 0;
-            for (int i = 1; i < rows; i++, ii++) {
-                int jj = 0;
-                for (int j = 0; j < cols; j++) {
-                    if(j != skip) {
-                        expandMatrix[ii][jj] = matrix[i][j];
-                        jj++;
-                    }
+        for (int i = 1; i < rows; i++, ii++) {
+            int jj = 0;
+            for (int j = 0; j < cols; j++) {
+                if (j != skip) {
+                    expandMatrix[ii][jj] = matrix[i][j];
+                    jj++;
                 }
             }
+        }
         return expandMatrix;
-    }
-
-    public static double[][] inverseMatrix(double[][] matrixA) {
-
-        return new double[][]{{0, 0}};
     }
 }
